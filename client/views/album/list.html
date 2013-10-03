@@ -1,0 +1,14 @@
+<template name="albumList">
+    {{#each albums}}
+        {{> albumThumb}}
+    {{/each}}
+</template>
+
+<template name="albumThumb">
+    <div class="album-thumb panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{name}}</h3>
+        </div>
+        <div class="panel-body"></div>
+    </div>
+</template>
