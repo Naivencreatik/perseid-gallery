@@ -1,3 +1,7 @@
+Meteor.publish("albums", function(){
+    return Perseid.collections.albums.find();
+});
+
 Meteor.startup(function(){
     if (Perseid.collections.albums.find().count() === 0){
         Perseid.collections.albums.insert({name: "Album 1"});

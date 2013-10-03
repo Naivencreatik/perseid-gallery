@@ -104,6 +104,7 @@
         "Packages",
         "process",
         "Tinytest",
-        "Perseid"
+        "Perseid",
+        "Router"
     ]       // additional predefined global variables
 }
