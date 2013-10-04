@@ -107,6 +107,7 @@
         "Perseid",
         "Router",
         "SmartFile",
-        "Handlebars"
+        "Handlebars",
+        "HTTP"
     ]       // additional predefined global variables
 }

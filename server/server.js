@@ -6,15 +6,26 @@ Meteor.publish("photos", function(albumId){
     return Perseid.colls.photos.find({albumId: albumId});
 });
 
-Meteor.startup(function(){
-    if (Perseid.colls.albums.find().count() === 0){
-        ["Album1", "Album2", "Album3"].forEach(function(name){
-            var id = Perseid.colls.albums.insert({name: name});
-        });
-    }
-});
-
 SmartFile.allow = function (options){
+    //Album existence check
+    var album = Perseid.colls.albums.findOne({_id: options.albumId});
+    if (!album) {
+        throw new Meteor.Error(404, "Unknown album");
+    }
+
+    //Photo name check
+    var conflictingPhoto = Perseid.colls.photos.findOne({
+        name: options.fileName,
+        albumId: album._id
+    });
+
+    if (conflictingPhoto) {
+        throw new Meteor.Error(409, "Photo '" + options.fileName + "' already exists within the album");
+    }
+
+    //Force photo to be stored within album directory
+    options.path = options.albumId;
+
     return true;
 };
 
