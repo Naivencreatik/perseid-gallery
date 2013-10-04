@@ -1,0 +1,13 @@
+<template name="photoList">
+    <div class="photo-list">
+        {{#each photos}}
+            {{> photoThumb}}
+        {{/each}}
+    </div>
+</template>
+
+<template name="photoThumb">
+    <div class="photo-thumb">
+        {{name}}
+    </div>
+</template>
