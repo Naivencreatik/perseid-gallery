@@ -10,10 +10,6 @@ Meteor.startup(function(){
     if (Perseid.colls.albums.find().count() === 0){
         ["Album1", "Album2", "Album3"].forEach(function(name){
             var id = Perseid.colls.albums.insert({name: name});
-
-            ["Photo1", "Photo2", "Photo3"].forEach(function(pName){
-                Perseid.colls.photos.insert({name: pName, albumId: id});
-            });
         });
     }
 });
@@ -23,7 +19,11 @@ SmartFile.allow = function (options){
 };
 
 SmartFile.onUpload = function (result, options){
-    console.log(result);
+    Perseid.colls.photos.insert({
+        albumId: options.albumId,
+        name: options.fileName,
+        date: new Date()
+    });
 };
 
 SmartFile.onUploadFail = function (result, options){

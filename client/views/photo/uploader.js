@@ -17,13 +17,15 @@ Template.photoUploader.events({
         event.stopPropagation();
         event.preventDefault();
 
+        var albumId = this._id;
+
         var file = event.dataTransfer.files[0];
 
         if (file.type.indexOf("image") !== 0) {
             return;
         }
 
-        SmartFile.upload(file, function(err, uploadPath){
+        SmartFile.upload(file, {albumId: albumId}, function(err, uploadPath){
             if (err) {
                 //XXX: proper user feedback ?
                 console.log(err);

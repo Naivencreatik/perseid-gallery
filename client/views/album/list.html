@@ -1,7 +1,11 @@
-<template name="albumList">
+<template name="albumListPage">
     <div class="page-header">
         <h1>Albums</h1>
     </div>
+    {{> albumList}}
+</template>
+
+<template name="albumList">
     <div class="album-list">
         {{#each albums}}
             {{> albumThumb}}
@@ -10,7 +14,7 @@
 </template>
 
 <template name="albumThumb">
-    <a href="{{pathFor 'album'}}" class="album-thumb panel panel-primary">
+    <a href="{{pathFor 'albumPage'}}" class="album-thumb panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">{{name}}</h3>
         </div>

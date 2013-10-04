@@ -3,12 +3,12 @@ Perseid.subs = {};
 Perseid.subs.albums = Meteor.subscribe("albums");
 
 Router.map(function(){
-    this.route("albumList", {
+    this.route("albumListPage", {
         path: "/",
         waitOn: Perseid.subs.albums
     });
 
-    this.route("album", {
+    this.route("albumPage", {
         path:"/:_id",
         waitOn: function (){
             return [Perseid.subs.albums, Perseid.subs.photos];
@@ -28,3 +28,4 @@ Router.map(function(){
 Router.configure({
     layout: "layout"
 });
+

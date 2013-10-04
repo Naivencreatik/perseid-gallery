@@ -106,6 +106,7 @@
         "Tinytest",
         "Perseid",
         "Router",
-        "SmartFile"
+        "SmartFile",
+        "Handlebars"
     ]       // additional predefined global variables
 }
