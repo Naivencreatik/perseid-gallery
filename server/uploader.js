@@ -58,7 +58,7 @@ SmartFile.onIncomingFile = function (data, options){
 
     var uploadQueue = [tmpFile];
 
-    [256, 512].forEach(function(size){
+    [256, 512, 1024].forEach(function(size){
         var resizedFile = path.resolve(tmpDir, baseName + "-" + size + ".jpg");
 
         Imagemagick.resize({
