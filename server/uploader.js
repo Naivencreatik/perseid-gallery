@@ -40,7 +40,7 @@ SmartFile.onUpload = function (result, options){
 };
 
 SmartFile.onUploadFail = function (result, options){
-    console.log("Fail: ", result);
+    console.log("SmartFile upload failed: ", result);
 };
 
 function writeBufferToTempFile(buffer, fileName){

@@ -10,7 +10,7 @@ Template.photoList.rendered = function(){
 
     $(el).hide();
 
-    imagesLoaded(el, function() {
+    imagesLoaded(el, function(){
         $(el).show();
 
         that.pckry = new Packery(el, {
@@ -24,3 +24,14 @@ Template.photoList.destroyed = function(){
     this.pckry.destroy();
 };
 
+Template.photoThumb.events({
+    "click": function(event, template){
+        var photo = this;
+
+        var $el = $(template.firstNode);
+        var offset = $el.offset();
+        photo.offset = offset;
+
+        Session.set("photo.selected", photo);
+    }
+});

@@ -1,6 +1,20 @@
 Handlebars.registerHelper("photoImg", function(size){
     var photoPath = SmartFile.basePublicUrl + "/" + this.albumId + "/" + this.name + "-";
-    photoPath += (size === "thumb") ? 256 : 512;
+
+    var photoSize;
+    switch (size){
+    case "thumb":
+        photoSize = 256;
+        break;
+    case "medium":
+        photoSize = 512;
+        break;
+    case "big":
+        photoSize = 1024;
+        break;
+    }
+
+    photoPath += photoSize;
     photoPath += ".jpg";
 
     photoPath = Handlebars._escape(photoPath);

@@ -3,5 +3,10 @@
         <h1>{{name}}</h1>
     </div>
     {{> photoList}}
+    {{#isolate}}
+        {{#if photoSelected}}
+            {{> photoOverlay photoSelected}}
+        {{/if}}
+    {{/isolate}}
     {{> photoUploader}}
 </template>
