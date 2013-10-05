@@ -2,7 +2,8 @@
   "packages": {
     "iron-router": {},
     "smartfile": {
-        "path": "/home/sylvain/code/js/meteor-smartfile"
-    }
+      "path": "/home/sylvain/code/js/meteor-smartfile"
+    },
+    "imagemagick": {}
   }
 }

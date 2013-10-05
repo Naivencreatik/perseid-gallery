@@ -8,3 +8,5 @@ preserve-inputs
 iron-router
 smartfile
 check
+imagemagick
+jquery
