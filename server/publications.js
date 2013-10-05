@@ -8,7 +8,11 @@ Meteor.publish("albumsThumbs", function(){
     Perseid.colls.albums.find().forEach(function(album){
         var photoColl = Perseid.colls.photos;
         var thumb = photoColl.findOne({albumId: album._id}, {sort: photoColl.sort});
-        that.added("photos", thumb._id, thumb);
+
+        // Albums can be empty
+        if (thumb){
+            that.added("photos", thumb._id, thumb);
+        }
     });
 
     this.ready();
