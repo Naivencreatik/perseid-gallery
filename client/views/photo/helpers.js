@@ -1,5 +1,8 @@
-Handlebars.registerHelper("photoImg", function(){
-    var photoPath = SmartFile.basePublicUrl + "/" + this.albumId + "/" + this.name;
+Handlebars.registerHelper("photoImg", function(size){
+    var photoPath = SmartFile.basePublicUrl + "/" + this.albumId + "/" + this.name + "-";
+    photoPath += (size === "thumb") ? 256 : 512;
+    photoPath += ".jpg";
+
     photoPath = Handlebars._escape(photoPath);
 
     var photoName = Handlebars._escape(this.name);
