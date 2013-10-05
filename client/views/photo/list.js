@@ -1,6 +1,6 @@
 Template.photoList.helpers({
     "photos": function(){
-        return Perseid.colls.photos.find({albumId: this._id}, {sort:{name:-1}});
+        return Perseid.colls.photos.find({albumId: this._id}, {sort:{name: 1}});
     }
 });
 
@@ -10,7 +10,7 @@ Template.photoList.rendered = function(){
 
     $(el).hide();
 
-    window.imagesLoaded(el, function() {
+    imagesLoaded(el, function() {
         $(el).show();
 
         that.pckry = new Packery(el, {
