@@ -45,7 +45,7 @@ Meteor.methods({
             }
         };
 
-        Perseid.colls.albums.prePhotoInsertCheck(albumId, ytPhoto);
+        Perseid.colls.albums.prePhotoInsertCheck(ytPhoto);
         Perseid.colls.photos.insert(ytPhoto);
     }
 });
