@@ -1,15 +1,15 @@
 <template name="photoOverlay">
     <div class="photo-overlay-wrap">
-        <div class="photo-overlay">
-            {{> photoOverlayImg}}
-        </div>
-        <div class="photo-overlay-shadow"></div>
+        {{> photoOverlayImg}}
         {{> photoOverlayNav}}
+        <div class="photo-overlay-shadow"></div>
     </div>
 </template>
 
 <template name="photoOverlayImg">
-    {{photoImg "big"}}
+    <div class="photo-overlay">
+        {{photoImg "big"}}
+    </div>
 </template>
 
 <template name="photoOverlayNav">

@@ -38,6 +38,7 @@ Meteor.methods({
             name: entry.title.$t,
             type: "youtube",
             youtube: {
+                videoId: videoId,
                 duration: entry.media$group.yt$duration.seconds * 1000,
                 artwork: artworkUrl,
                 url: url
