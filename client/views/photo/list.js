@@ -12,11 +12,7 @@ Template.photoList.rendered = function(){
 
     imagesLoaded(el, function(){
         $(el).show();
-
-        that.pckry = new Packery(el, {
-            itemSelector: ".photo-thumb",
-            gutter: 10
-        });
+        that.pckry = initializePackery(el);
     });
 };
 
@@ -31,7 +27,33 @@ Template.photoThumb.events({
         var $el = $(template.firstNode);
         var offset = $el.offset();
         photo.offset = offset;
+        photo.animate = true;
 
         Session.set("photo.selected", photo);
     }
 });
+
+function initializePackery(el){
+    var pckry = new Packery(el, {
+        itemSelector: ".photo-thumb",
+        gutter: 10,
+        isInitLayout: false
+    });
+
+    pckry.on("layoutComplete", function(){
+        var order = [];
+        pckry.sortItemsByPosition();
+
+        var elems = pckry.getItemElements();
+        _.each(elems, function(elem, i){
+            elem.setAttribute("order", i);
+            order.push(elem.getAttribute("data-id"));
+        });
+
+        Session.set("album.order", order);
+    });
+
+    pckry.layout();
+
+    return pckry;
+}

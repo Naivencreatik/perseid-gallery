@@ -3,8 +3,18 @@
         {{> photoOverlayImg}}
     </div>
     <div class="photo-overlay-shadow"></div>
+    {{> photoOverlayNav}}
 </template>
 
 <template name="photoOverlayImg">
     {{photoImg "big"}}
+</template>
+
+<template name="photoOverlayNav">
+    {{#if navigation.prev}}
+        <div class="photo-overlay-prev">&lt;</div>
+    {{/if}}
+    {{#if navigation.next}}
+        <div class="photo-overlay-next">&gt;</div>
+    {{/if}}
 </template>
