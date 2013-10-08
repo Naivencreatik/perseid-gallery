@@ -5,21 +5,7 @@ var readFileSync = Meteor._wrapAsync(fs.readFile);
 var tmpDir = process.env.TMP || process.env.TMPDIR || process.env.TEMP || "/tmp" || process.cwd();
 
 SmartFile.allow = function (options){
-    //Album existence check
-    var album = Perseid.colls.albums.findOne({_id: options.albumId});
-    if (!album) {
-        throw new Meteor.Error(404, "Unknown album");
-    }
-
-    //Photo name check
-    var conflictingPhoto = Perseid.colls.photos.findOne({
-        name: options.fileName,
-        albumId: album._id
-    });
-
-    if (conflictingPhoto) {
-        throw new Meteor.Error(409, "Photo '" + options.fileName + "' already exists within the album");
-    }
+    Perseid.colls.albums.prePhotoInsertCheck(options.albumId, {name: options.fileName});
 
     //Force photo to be stored within album directory
     options.path = options.albumId;

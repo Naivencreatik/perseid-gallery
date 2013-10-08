@@ -1,5 +1,24 @@
 Handlebars.registerHelper("photoImg", function(size){
-    var photoPath = SmartFile.basePublicUrl + "/" + this.albumId + "/" + this.name + "-";
+    var photoPath;
+
+    if (!this.type){
+        photoPath = imgFromSmartFile(this, size);
+    }
+    else if (this.type === "youtube"){
+        photoPath = this.youtube.artwork;
+    }
+
+    photoPath = Handlebars._escape(photoPath);
+
+    var photoName = Handlebars._escape(this.name);
+
+    var imgEl = "<img src='" + photoPath + "' alt='" + photoName + "'></img>";
+
+    return new Handlebars.SafeString(imgEl);
+});
+
+function imgFromSmartFile(photo, size){
+    var photoPath = SmartFile.basePublicUrl + "/" + photo.albumId + "/" + photo.name + "-";
 
     var photoSize;
     switch (size){
@@ -17,11 +36,5 @@ Handlebars.registerHelper("photoImg", function(size){
     photoPath += photoSize;
     photoPath += ".jpg";
 
-    photoPath = Handlebars._escape(photoPath);
-
-    var photoName = Handlebars._escape(this.name);
-
-    var imgEl = "<img src='" + photoPath + "' alt='" + photoName + "'></img>";
-
-    return new Handlebars.SafeString(imgEl);
-});
+    return photoPath;
+}
