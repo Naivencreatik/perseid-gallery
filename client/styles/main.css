@@ -35,11 +35,21 @@
 }
 
 .photo-overlay-next, .photo-overlay-prev {
-    position: absolute;
+    position: fixed;
     top: 0;
-    z-index: 3;
-    font-size: 4em;
+    font-size: 30em;
     color: #fff;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.photo-overlay-next {
+    right: 10px;
+}
+
+
+.photo-overlay-prev {
+    left: 10px;
 }
 
 .photo-uploader {
