@@ -15,7 +15,7 @@ Template.photoOverlay.events({
 Template.photoOverlay.rendered = function(){
     var that = this;
     var $window = $(window);
-    var el = this.firstNode;
+    var el = this.find(".photo-overlay");
     var img = this.find("img");
 
     Session.set("photo.overlay.loading", this.data._id);
@@ -23,9 +23,8 @@ Template.photoOverlay.rendered = function(){
     var needAnimation = this.data.animate;
     delete this.data.animate;
 
-    applyStyle(img, "display", "none");
-
     if (needAnimation){
+        applyStyle(el, "transition", "", true);
         moveElement(el, that.data.offset.left, that.data.offset.top - $window.scrollTop());
     }
 
@@ -46,8 +45,6 @@ Template.photoOverlay.rendered = function(){
         if (needAnimation){
             applyStyle(el, "transition", "0.8s", true);
         }
-
-        applyStyle(img, "display", "");
 
         Meteor.defer(function(){
             moveElement(el, x, y);
