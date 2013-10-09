@@ -1,5 +1,7 @@
 var $window = $(window);
 
+var transformProperty = getStyleProperty("transform");
+
 var transitionEndEvent = {
     WebkitTransition: "webkitTransitionEnd",
     MozTransition: "transitionend",
@@ -15,17 +17,19 @@ Template.photoOverlayImg.rendered = function(){
 
     Session.set("photo.overlay.loading", photo._id);
 
-    applyStyle(img, "display", "none");
+    applyStyle(el, "transformOrigin", "0 0", true);
 
     if (animate){
         delete photo.animate;
 
         moveElement(el, photo.offset.left, photo.offset.top - $window.scrollTop());
 
-        $(el).one(transitionEndEvent, function(event){
+        el.addEventListener(transitionEndEvent, function(event){
             onOverlayTransitionEnd(el, photo);
-        });
+        }, false);
     }
+
+    applyStyle(img, "display", "none");
 
     imagesLoaded(el, function(){
         Session.set("photo.overlay.loading", null);
@@ -48,29 +52,44 @@ function onOverlayImageLoaded(overlayEl, imgEl, animate){
     var finalHeight = wHeight * 0.9;
     var finalWidth = finalHeight * imgRatio;
 
+    var scale = finalHeight / 256;
+
     var x = wWidth/2 - finalWidth/2;
     var y = wHeight * 0.05;
 
     if (animate){
-        applyStyle(overlayEl, "transition", "0.8s", true);
+        applyStyle(overlayEl, "transitionProperty", transformProperty, true);
+        applyStyle(overlayEl, "transitionDuration", "0.8s", true);
     }
 
     applyStyle(imgEl, "display", "");
-    moveElement(overlayEl, x, y);
-    applyStyle(overlayEl, "height", "90%");
+    moveElement(overlayEl, x, y, scale);
+
+    overlayEl._transform = {
+        x: x,
+        y: y,
+        width: finalWidth,
+        height: finalHeight
+    };
 }
 
 function onOverlayTransitionEnd(overlayEl, photo){
     if (photo.type === "youtube"){
         var iframe = document.createElement("iframe");
-        iframe.setAttribute("width", overlayEl.scrollWidth);
-        iframe.setAttribute("height", overlayEl.scrollHeight);
+        iframe.setAttribute("width", overlayEl._transform.width);
+        iframe.setAttribute("height", overlayEl._transform.height);
         iframe.setAttribute("frameborder", "0");
         iframe.style.position = "absolute";
         iframe.style.top = 0;
         iframe.style.left = 0;
         iframe.style.zIndex = 999;
         iframe.src = "http://www.youtube.com/embed/" + photo.youtube.videoId + "?autoplay=1&html5=1";
+
+        // Use relative height method as scale() transform would affect youtube player
+        applyStyle(overlayEl, "transition", "", true);
+        moveElement(overlayEl, overlayEl._transform.x, overlayEl._transform.y);
+        applyStyle(overlayEl, "height", "90%");
+
         $(overlayEl).append(iframe);
     }
 }
@@ -95,9 +114,14 @@ function applyStyle(el, prop, value, resolve){
     el.style[prop] = value;
 }
 
-function moveElement(el, x, y){
-    var translate = "translate(" + x + "px, " + y + "px)";
-    applyStyle(el, "transform", translate, true);
+function moveElement(el, x, y, scale){
+    var tranform = "translate(" + x + "px, " + y + "px)";
+
+    if (scale){
+        tranform += " scale(" + scale +")";
+    }
+
+    applyStyle(el, "transform", tranform, true);
 }
 
 Template.photoOverlay.events({
