@@ -5,14 +5,16 @@ Template.photoList.helpers({
 });
 
 Template.photoList.rendered = function(){
-    var el = this.firstNode;
     var that = this;
+    var el = this.firstNode;
 
     $(el).hide();
 
+    this.pckry = initializePackery(el);
+
     imagesLoaded(el, function(){
         $(el).show();
-        that.pckry = initializePackery(el);
+        that.pckry.layout();
     });
 };
 
@@ -52,8 +54,6 @@ function initializePackery(el){
 
         Session.set("album.order", order);
     });
-
-    pckry.layout();
 
     return pckry;
 }
