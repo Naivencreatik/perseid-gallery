@@ -53,7 +53,7 @@ SmartFile.onIncomingFile = function (data, options){
         var newOptions = populate({}, options)
         newOptions.fileName = path.basename(f);
 
-        var r = SmartFile.upload(readFileSync(f), newOptions);
+        var r = SmartFile.save(readFileSync(f), newOptions);
 
         results.push(r);
 
