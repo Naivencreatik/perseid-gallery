@@ -18,8 +18,6 @@ Handlebars.registerHelper("photoImg", function(size){
 });
 
 function imgFromSmartFile(photo, size){
-    var photoPath = SmartFile.basePublicUrl + "/" + photo.albumId + "/" + photo.name + "-";
-
     var photoSize;
     switch (size){
     case "thumb":
@@ -33,8 +31,8 @@ function imgFromSmartFile(photo, size){
         break;
     }
 
-    photoPath += photoSize;
-    photoPath += ".jpg";
+    var photoPath = SmartFile.resolvePublic(photo.albumId);
+    photoPath +=  "/" + photo.name + "-" + photoSize + ".jpg";
 
     return photoPath;
 }
