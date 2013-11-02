@@ -26,8 +26,8 @@ SmartFile.onUpload = function (result, options){
     });
 };
 
-SmartFile.onUploadFail = function (result, options){
-    console.log("SmartFile upload failed: ", result);
+SmartFile.onUploadFail = function (err, options){
+    console.log("SmartFile upload failed: ", err.statusCode, err.detail);
 };
 
 SmartFile.onIncomingFile = function (data, options){
