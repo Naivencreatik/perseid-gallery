@@ -1,0 +1,18 @@
+<template name="photoAdd">
+    {{> photoAddFile}}
+    {{> photoAddYoutube}}
+</template>
+
+<template name="photoAddFile">
+    <form class="photo-file-form"  action="#">
+        <button type="button">Ajouter</button>
+        <input type="file" multiple accept="image/*">
+    </form> 
+</template>
+
+<template name="photoAddYoutube">
+    <form class="photo-youtube-form" action="#">
+        <input type="text" name="youtubeUrl" required placeholder="YouTube URL">
+        <button type="submit">Ajouter</button>
+    </form>
+</template>
