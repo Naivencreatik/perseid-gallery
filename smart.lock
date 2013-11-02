@@ -3,19 +3,19 @@
   "dependencies": {
     "basePackages": {
       "iron-router": {},
-      "smartfile": {
-        "path": "../../js/meteor-smartfile"
-      },
+      "smartfile": {},
       "imagemagick": {}
     },
     "packages": {
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.5.4",
-        "commit": "3e0e22ff85630b7503d0daa1538c6d90abb84020"
+        "tag": "v0.6.1",
+        "commit": "4e1ee0581d68bff422a915dacb0bd30eae10fe08"
       },
       "smartfile": {
-        "path": "../../js/meteor-smartfile"
+        "git": "https://github.com/sylvaingi/meteor-smartfile.git",
+        "tag": "v0.0.2",
+        "commit": "dd8991f324c567d9d28273b739d582731f0c6756"
       },
       "imagemagick": {
         "git": "https://github.com/sylvaingi/meteor-imagemagick.git",
