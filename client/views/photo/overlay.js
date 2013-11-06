@@ -102,8 +102,6 @@ function onOverlayDisplayed(overlayEl, photo){
         iframe.setAttribute("width", overlayEl._transform.width);
         iframe.setAttribute("height", overlayEl._transform.height);
 
-
-
         // Use relative height method as scale() transform would affect youtube player
         applyStyle(overlayEl, "transition", "", true);
         moveElement(overlayEl, overlayEl._transform.x, overlayEl._transform.y);

@@ -1,7 +1,11 @@
 {
+  "name": "perseid-gallery",
+  "description": "Meteor modular CMS - Gallery component",
+  "homepage": "none",
+  "author": "Sylvain Gizard  (sylvain.gizard@gmail.com)",
+  "version": "0.1.0",
+  "git": "none",
   "packages": {
-    "iron-router": {},
-    "smartfile": {},
     "imagemagick": {}
   }
 }

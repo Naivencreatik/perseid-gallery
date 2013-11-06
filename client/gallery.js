@@ -1,5 +1,3 @@
-Perseid.subs = {};
-
 Perseid.subs.albums = Meteor.subscribe("albums");
 Perseid.subs.albumsThumbs = Meteor.subscribe("albumsThumbs");
 
@@ -25,8 +23,3 @@ Router.map(function(){
         }
     });
 });
-
-Router.configure({
-    layout: "layout"
-});
-
