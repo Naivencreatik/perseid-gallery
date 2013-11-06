@@ -11,7 +11,7 @@ var transitionEndEvent = {
 
 Template.photoOverlayImg.rendered = function(){
     var el = this.firstNode;
-    var img = this.find("img");
+    var imgEl = this.find("img");
     var photo = this.data;
     var animate = photo.animate;
 
@@ -25,25 +25,36 @@ Template.photoOverlayImg.rendered = function(){
         moveElement(el, photo.offset.left, photo.offset.top - $window.scrollTop());
 
         el.addEventListener(transitionEndEvent, function(event){
-            onOverlayTransitionEnd(el, photo);
+            onOverlayDisplayed(el, photo);
+            applyStyle(el, "transitionProperty", "", true);
+            applyStyle(el, "transitionDuration", "", true);
         }, false);
     }
 
-    applyStyle(img, "display", "none");
+    applyStyle(imgEl, "display", "none");
 
     imagesLoaded(el, function(){
         Session.set("photo.overlay.loading", null);
-        onOverlayImageLoaded(el, img, animate);
+        onOverlayLoaded(el, imgEl, animate);
 
         if (!animate){
-            onOverlayTransitionEnd(el, photo);
+            onOverlayDisplayed(el, photo);
         }
     });
+
+    $(window).on("resize.photo-overlay", _.debounce(function(){
+        onOverlayLoaded(el, imgEl, false);
+        onOverlayDisplayed(el, photo);
+    }, 500));
 
     prepareNextAndPrevPhotos(this.data);
 };
 
-function onOverlayImageLoaded(overlayEl, imgEl, animate){
+Template.photoOverlayImg.destroyed = function(){
+    $(window).off(".photo-overlay");
+};
+
+function onOverlayLoaded(overlayEl, imgEl, animate){
     var imgRatio = imgEl.width / imgEl.height;
 
     var wWidth = $window.width();
@@ -73,7 +84,7 @@ function onOverlayImageLoaded(overlayEl, imgEl, animate){
     };
 }
 
-function onOverlayTransitionEnd(overlayEl, photo){
+function onOverlayDisplayed(overlayEl, photo){
     if (photo.type === "youtube"){
         var iframe = document.createElement("iframe");
         iframe.setAttribute("width", overlayEl._transform.width);
