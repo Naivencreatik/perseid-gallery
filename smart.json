@@ -1,10 +1,10 @@
 {
   "name": "perseid-gallery",
   "description": "Meteor modular CMS - Gallery component",
-  "homepage": "none",
+  "homepage": "https://github.com/Naivencreatik/perseid-gallery",
   "author": "Sylvain Gizard  (sylvain.gizard@gmail.com)",
   "version": "0.1.0",
-  "git": "none",
+  "git": "https://github.com/Naivencreatik/perseid-gallery.git",
   "packages": {
     "imagemagick": {}
   }
