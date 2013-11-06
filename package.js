@@ -32,23 +32,19 @@ Package.on_use(function (api) {
     'client/vendor/packery.pkgd.js',
     'client/vendor/imagesloaded.pkgd.js',
 
-    'client/views/album/add.html',
-    'client/views/album/add.js',
+    'client/views/admin/header.html',
+    'client/views/admin/header.js',
+
     'client/views/album/album.html',
     'client/views/album/album.js',
     'client/views/album/list.html',
     'client/views/album/list.js',
 
-    'client/views/photo/add.html',
-    'client/views/photo/add.js',
     'client/views/photo/helpers.js',
     'client/views/photo/list.html',
     'client/views/photo/list.js',
     'client/views/photo/overlay.html',
-    'client/views/photo/overlay.js',
-
-    'client/views/upload/upload.html',
-    'client/views/upload/upload.js'
+    'client/views/photo/overlay.js'
 
   ], 'client');
 });

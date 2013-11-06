@@ -1,0 +1,35 @@
+<template name="adminAlbumListActions">
+    <li class="nav-item">
+        <a href="#">Ajouter un album</a>
+    </li>
+    {{> adminUploadProgress}}
+</template>
+
+<template name="adminAlbumActions">
+    {{> adminAddImage}}
+    {{> adminAddYoutube}}
+    {{> adminUploadProgress}}
+</template>
+
+<template name="adminAddImage">
+    <li class="nav-item">
+        <a href="#">Ajouter images</a>
+        <form class="photo-file-form"  action="#">
+            <input type="file" multiple accept="image/*">
+        </form> 
+    </li>
+</template>
+
+<template name="adminAddYoutube">
+    <li class="nav-item">
+        <a href="#">Ajouter video YouTube</a>
+    </li>
+</template>
+
+<template name="adminUploadProgress">
+    {{#if total}}
+        <li class="nav-item right">
+            Uploads: {{success}}/{{total}}
+        </li>
+    {{/if}}
+</template>
