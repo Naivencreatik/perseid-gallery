@@ -15,9 +15,8 @@ Template.photoOverlayImg.rendered = function(){
     var photo = this.data;
     var animate = photo.animate;
 
-    Session.set("photo.overlay.loading", photo._id);
-
     applyStyle(el, "transformOrigin", "0 0", true);
+    applyStyle(imgEl, "display", "none");
 
     if (animate){
         delete photo.animate;
@@ -31,10 +30,7 @@ Template.photoOverlayImg.rendered = function(){
         }, false);
     }
 
-    applyStyle(imgEl, "display", "none");
-
     imagesLoaded(el, function(){
-        Session.set("photo.overlay.loading", null);
         onOverlayLoaded(el, imgEl, animate);
 
         if (!animate){
@@ -45,7 +41,7 @@ Template.photoOverlayImg.rendered = function(){
     $(window).on("resize.photo-overlay", _.debounce(function(){
         onOverlayLoaded(el, imgEl, false);
         onOverlayDisplayed(el, photo);
-    }, 500));
+    }, 250));
 
     prepareNextAndPrevPhotos(this.data);
 };
@@ -86,22 +82,34 @@ function onOverlayLoaded(overlayEl, imgEl, animate){
 
 function onOverlayDisplayed(overlayEl, photo){
     if (photo.type === "youtube"){
-        var iframe = document.createElement("iframe");
+        var iframe = overlayEl.querySelector("iframe");
+        
+        if (iframe === null){
+            iframe = document.createElement("iframe");
+            iframe.setAttribute("frameborder", "0");
+            iframe.style.position = "absolute";
+            iframe.style.top = 0;
+            iframe.style.left = 0;
+            iframe.style.zIndex = 999;
+            iframe.src = "http://www.youtube.com/embed/" + photo.youtube.videoId + "?autoplay=1&html5=1";
+
+            iframe.onload = function(){
+                var preview = overlayEl.querySelector("img");
+                overlayEl.removeChild(preview);
+            };
+        }
+
         iframe.setAttribute("width", overlayEl._transform.width);
         iframe.setAttribute("height", overlayEl._transform.height);
-        iframe.setAttribute("frameborder", "0");
-        iframe.style.position = "absolute";
-        iframe.style.top = 0;
-        iframe.style.left = 0;
-        iframe.style.zIndex = 999;
-        iframe.src = "http://www.youtube.com/embed/" + photo.youtube.videoId + "?autoplay=1&html5=1";
+
+
 
         // Use relative height method as scale() transform would affect youtube player
         applyStyle(overlayEl, "transition", "", true);
         moveElement(overlayEl, overlayEl._transform.x, overlayEl._transform.y);
         applyStyle(overlayEl, "height", "90%");
 
-        $(overlayEl).append(iframe);
+        overlayEl.appendChild(iframe);
     }
 }
 
