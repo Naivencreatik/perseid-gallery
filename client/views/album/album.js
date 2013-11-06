@@ -1,4 +1,4 @@
-Template.albumPage.events({
+Template.album.events({
     "dragover": function (event, template) {
         //Ignore drags when the overlay is shown
         if (_.isObject(Session.get("photo.selected"))){
