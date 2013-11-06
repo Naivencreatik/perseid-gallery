@@ -2,7 +2,7 @@ var ytRegex = new RegExp("(?:https?://)?www\\.youtube\\.com/watch(?:\\?|&)v=([^\
 
 Meteor.methods({
     "album.add": function(name){
-        check(name, AlphaNumericNonEmptyString);
+        check(name, Perseid.match.AlphaNumericNonEmptyString);
 
         var conflictingAlbum = Perseid.colls.albums.findOne({name: name});
         if (conflictingAlbum) {

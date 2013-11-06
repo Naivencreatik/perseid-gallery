@@ -12,7 +12,6 @@ Package.on_use(function (api) {
   ], ['server']);
 
   api.add_files([
-    'lib/match.extra.js',
     'collections/albums.js',
     'collections/photos.js'
   ], ['client', 'server']);
