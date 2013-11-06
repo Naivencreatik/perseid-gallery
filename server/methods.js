@@ -2,15 +2,13 @@ var ytRegex = new RegExp("(?:https?://)?www\\.youtube\\.com/watch(?:\\?|&)v=([^\
 
 Meteor.methods({
     "album.add": function(name){
+        Perseid.checkUserId(this.userId);
         check(name, Perseid.match.AlphaNumericNonEmptyString);
 
-        var conflictingAlbum = Perseid.colls.albums.findOne({name: name});
-        if (conflictingAlbum) {
-            throw new Meteor.Error(409, "Album " + name + " already exists");
-        }
+        var album = {name: name};
+        Perseid.colls.photos.conflictCheck(album);
 
-        var id = Perseid.colls.albums.insert({name: name});
-
+        var id = Perseid.colls.albums.insert(album);
         try {
             SmartFile.mkdir(id);
         } catch (e) {
@@ -19,12 +17,15 @@ Meteor.methods({
         }
     },
 
-    "album.embed.youtube": function(albumId, youtubeUrl){
-        var match = ytRegex.exec(youtubeUrl);
+    "photo.add.youtube": function(albumId, youtubeUrl){
+        Perseid.checkUserId(this.userId);
 
+        var match = ytRegex.exec(youtubeUrl);
         if (!match){
             throw new Meteor.Error(400, "Bad YouTube URL");
         }
+
+        Perseid.colls.albums.existenceCheck(albumId);
 
         var videoId = match[1];
         var result = Meteor.http.get("http://gdata.youtube.com/feeds/api/videos/"+videoId+"?v=2&alt=json");
@@ -45,7 +46,19 @@ Meteor.methods({
             }
         };
 
-        Perseid.colls.albums.prePhotoInsertCheck(ytPhoto);
+        Perseid.colls.photos.conflictCheck(ytPhoto);
         Perseid.colls.photos.insert(ytPhoto);
+    },
+
+    "photo.delete": function(id) {
+        Perseid.checkUserId(this.userId);
+
+        var photo = Perseid.colls.photos.existenceCheck(id);
+
+        if (photo.type !== "youtube"){
+            //TODO: smartfile!
+        }
+
+        Perseid.colls.photos.remove({_id: id});
     }
 });

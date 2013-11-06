@@ -25,7 +25,7 @@ Template.adminAddYoutube.events({
     "click a": function (event, template){
         event.preventDefault();
         var youtubeUrl = prompt("Adresse/URL Youtube?");
-        Meteor.call("album.embed.youtube", this._id, youtubeUrl);
+        Meteor.call("photo.add.youtube", this._id, youtubeUrl);
     }
 });
 

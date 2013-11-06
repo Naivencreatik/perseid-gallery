@@ -6,10 +6,9 @@ var tmpDir = process.env.TMP || process.env.TMPDIR || process.env.TEMP || "/tmp"
 
 SmartFile.allow = function (options){
     var baseName = stripExtension(options.fileName);
-    Perseid.colls.albums.prePhotoInsertCheck({
-        name: baseName,
-        albumId: options.albumId
-    });
+
+    Perseid.colls.photos.conflictCheck({name: baseName});
+    Perseid.colls.albums.existenceCheck(options.albumId);
 
     //Force photo to be stored within album directory
     options.path = options.albumId;

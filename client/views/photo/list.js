@@ -23,6 +23,10 @@ Template.photoList.destroyed = function(){
 };
 
 Template.photoThumb.events({
+    "click button": function (event, template) {
+        event.stopImmediatePropagation();
+        Meteor.call("photo.delete", this._id);
+    },
     "click": function(event, template){
         var photo = this;
 
