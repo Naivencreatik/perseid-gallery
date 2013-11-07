@@ -22,7 +22,7 @@ Albums.upload = function (id, files){
         var file = files.shift();
         if (!file) return;
 
-        SmartFile.upload(file, {albumId: id}, function(err, uploadPath){
+        Gallery.smartfile.upload(file, {albumId: id}, function(err, uploadPath){
             var state = "success";
             if (err) {
                 state = "error";

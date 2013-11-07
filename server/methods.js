@@ -13,7 +13,7 @@ Meteor.methods({
 
         var id = Albums.insert(album);
         try {
-            SmartFile.mkdir(id);
+            Gallery.smartfile.mkdir(id);
         } catch (e) {
             Albums.remove({_id: id});
             throw new Meteor.Error(500, e.message);
@@ -24,7 +24,7 @@ Meteor.methods({
         Perseid.checkUserId(this.userId);
         var album = Albums.existenceCheck(id);
 
-        SmartFile.rm(id);
+        Gallery.smartfile.rm(id);
         
         Photos.remove({albumId: id});
         Albums.remove({_id: id});
@@ -74,7 +74,7 @@ Meteor.methods({
             });
             paths.push(Photos.pathFor(photo)); //original upload
 
-            var res = SmartFile.rm(paths);
+            var res = Gallery.smartfile.rm(paths);
         }
 
         Photos.remove({_id: id});

@@ -55,7 +55,7 @@ sf.onIncomingFile = function (data, options){
         var newOptions = populate({}, options)
         newOptions.fileName = path.basename(f);
 
-        var r = SmartFile.save(readFileSync(f), newOptions);
+        var r = sf.save(readFileSync(f), newOptions);
 
         results.push(r);
 

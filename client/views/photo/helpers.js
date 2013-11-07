@@ -33,5 +33,5 @@ function imgFromSmartFile(photo, size){
 
     var photoPath = Gallery.colls.photos.pathFor(photo, photoSize);
 
-    return SmartFile.resolvePublic(photoPath);
+    return Gallery.smartfile.resolvePublic(photoPath);
 }
