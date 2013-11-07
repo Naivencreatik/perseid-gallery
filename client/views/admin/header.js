@@ -37,10 +37,12 @@ Template.adminUploadProgress.helpers({
     "stats": function() {
         var total = Perseid.colls.uploads.find().count();
         var error = Perseid.colls.uploads.find({state: "error"}).count();
-        var pending = Perseid.colls.uploads.find({state: "pending"}).count();
+        var success = Perseid.colls.uploads.find({state: "success"}).count();
+        var hasPending = Perseid.colls.uploads.find({state: "pending"}).count() !== 0;
 
         return {
-            pending: pending,
+            hasPending: hasPending,
+            success: success,
             total: total - error,
             error: error
         };
