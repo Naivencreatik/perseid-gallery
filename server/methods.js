@@ -1,3 +1,6 @@
+var Photos = Perseid.colls.photos;
+var Albums = Perseid.colls.albums;
+
 var ytRegex = new RegExp("(?:https?://)?www\\.youtube\\.com/watch(?:\\?|&)v=([^\\s&]+)");
 
 Meteor.methods({
@@ -6,15 +9,25 @@ Meteor.methods({
         check(name, Perseid.match.AlphaNumericNonEmptyString);
 
         var album = {name: name};
-        Perseid.colls.photos.conflictCheck(album);
+        Photos.conflictCheck(album);
 
-        var id = Perseid.colls.albums.insert(album);
+        var id = Albums.insert(album);
         try {
             SmartFile.mkdir(id);
         } catch (e) {
-            Perseid.colls.albums.remove({_id: id});
+            Albums.remove({_id: id});
             throw new Meteor.Error(500, e.message);
         }
+    },
+
+    "album.delete": function(id){
+        Perseid.checkUserId(this.userId);
+        var album = Albums.existenceCheck(id);
+
+        SmartFile.rm(id);
+        
+        Photos.remove({albumId: id});
+        Albums.remove({_id: id});
     },
 
     "photo.add.youtube": function(albumId, youtubeUrl){
@@ -25,7 +38,7 @@ Meteor.methods({
             throw new Meteor.Error(400, "Bad YouTube URL");
         }
 
-        Perseid.colls.albums.existenceCheck(albumId);
+        Albums.existenceCheck(albumId);
 
         var videoId = match[1];
         var result = Meteor.http.get("http://gdata.youtube.com/feeds/api/videos/"+videoId+"?v=2&alt=json");
@@ -46,19 +59,24 @@ Meteor.methods({
             }
         };
 
-        Perseid.colls.photos.conflictCheck(ytPhoto);
-        Perseid.colls.photos.insert(ytPhoto);
+        Photos.conflictCheck(ytPhoto);
+        Photos.insert(ytPhoto);
     },
 
-    "photo.delete": function(id) {
+    "photo.delete": function(id){
         Perseid.checkUserId(this.userId);
 
         var photo = Perseid.colls.photos.existenceCheck(id);
 
         if (photo.type !== "youtube"){
-            //TODO: smartfile!
+            var paths = Photos.sizes.map(function(size){
+                return Photos.pathFor(photo, size);
+            });
+            paths.push(Photos.pathFor(photo)); //original upload
+
+            var res = SmartFile.rm(paths);
         }
 
-        Perseid.colls.photos.remove({_id: id});
+        Photos.remove({_id: id});
     }
 });

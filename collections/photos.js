@@ -1,10 +1,20 @@
 var Photos = new Meteor.Collection("photos");
 Photos.sort = {date: 1};
+Photos.sizes = [256, 512, 1024];
 
 Perseid.colls.photos = Photos;
 
-Photos.existenceCheck = function(id) {
-    var photo = Perseid.colls.photos.find({_id: id});
+Photos.pathFor = function(photo, size){
+    return photo.albumId + "/" + Photos.fileNameForSize(photo, size);
+}; 
+
+Photos.fileNameForSize = function(photo, size){
+    var sizeSuffix = (size !== undefined) ? ("-" + size) : "";
+    return photo.name + sizeSuffix + ".jpg";
+}; 
+
+Photos.existenceCheck = function(id){
+    var photo = Perseid.colls.photos.findOne({_id: id});
     if (!photo){
         throw new Meteor.Error(404, "Unknown photo");
     }

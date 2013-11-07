@@ -10,14 +10,13 @@
 </template>
 
 <template name="albumThumb">
-    <a href="{{pathFor 'album'}}" class="album-thumb panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{name}}</h3>
-        </div>
-        <div class="panel-body">
+    <div class="album-thumb">
+        <a href="{{pathFor 'album'}}" class="album-thumb-content">
+            <h3>{{name}}</h3>
             {{> albumThumbImg thumbImg}}
-        </div>
-    </a>
+        </a>
+        <button>Supprimer</button>
+    </div>
 </template>
 
 <template name="albumThumbImg">

@@ -35,8 +35,9 @@ SmartFile.onIncomingFile = function (data, options){
 
     var uploadQueue = [tmpFile];
 
-    [256, 512, 1024].forEach(function(size){
-        var resizedFile = path.resolve(tmpDir, options.name + "-" + size + ".jpg");
+    Perseid.colls.photos.sizes.forEach(function(size){
+        var actualfileName = Perseid.colls.photos.fileNameForSize(options, size);
+        var resizedFile = path.resolve(tmpDir, actualfileName);
 
         Imagemagick.resize({
             srcPath: tmpFile,
