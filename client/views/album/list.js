@@ -5,7 +5,7 @@ Template.albumList.helpers({
 });
 
 Template.albumThumb.events({
-    "click button": function(event){
+    "click .btn-delete": function(event){
         if (confirm("Voulez vous vraiment supprimer cet album?")) {
             Meteor.call("album.delete", this._id);            
         }
@@ -15,5 +15,8 @@ Template.albumThumb.events({
 Template.albumThumb.helpers({
     "thumbImg": function(){
         return Perseid.colls.photos.findOne({albumId: this._id});
+    },
+    "deleteMode": function(){
+        return Session.get("albums.delete");
     }
 });

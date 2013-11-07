@@ -8,9 +8,11 @@
 
 <template name="photoThumb">
     <div class="photo-thumb" data-id="{{_id}}">
-        {{photoImg "thumb"}}
-        {{#if currentUser}}
-            <button>{{i18n "photo.delete"}}</button>    
-        {{/if}}
+        <div class="photo-thumb-img">{{photoImg "thumb"}}</div>
+        {{#if deleteMode}}
+            <button class="btn-delete btn-danger">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>    
+        {{/if}}  
     </div>
 </template>

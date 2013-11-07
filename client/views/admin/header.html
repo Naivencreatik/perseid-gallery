@@ -1,12 +1,18 @@
 <template name="adminAlbumListActions">
-    <button class="btn navbar-btn btn-success">
+    <button class="btn navbar-btn btn-success album-add">
         <span class="glyphicon glyphicon-plus-sign"></span> {{i18n "admin.albums.add"}}
+    </button>
+    <button class="btn navbar-btn btn-danger album-delete">
+        <span class="glyphicon glyphicon-trash"></span> {{i18n "admin.albums.delete"}}
     </button>
 </template>
 
 <template name="adminAlbumActions">
     {{> adminAddImage}}
     {{> adminAddYoutube}}
+    <button class="btn navbar-btn btn-danger photo-delete">
+        <span class="glyphicon glyphicon-trash"></span> {{i18n "admin.photos.delete"}}
+    </button>
 </template>
 
 <template name="adminAddImage">

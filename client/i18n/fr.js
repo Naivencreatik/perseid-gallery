@@ -1,10 +1,9 @@
 i18n.map("fr", {
-    "admin.albums.add": "Ajouter un album",
-    "admin.posts.add": "Ajouter un article",
+    "admin.albums.add": "Ajouter album",
+    "admin.albums.delete": "Supprimer albums",
     "admin.photos.add.file": "Ajouter images",
     "admin.photos.add.youtube": "Ajouter video YouTube",
+    "admin.photos.delete": "Supprimer images",
     "uploads.progress": "Envoi en cours",
-    "album.dropfile": "Deposez vos images",
-    "album.delete": "Supprimer",
-    "photo.delete": "Supprimer"
+    "album.dropfile": "Deposez vos images"
 });

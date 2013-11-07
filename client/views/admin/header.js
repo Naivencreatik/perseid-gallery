@@ -1,7 +1,16 @@
 Template.adminAlbumListActions.events({
-    "click button": function (event, template){
+    "click .album-add": function (event, template){
         var albumName = prompt("Nom du nouvel album?");
         Meteor.call("album.add", albumName);
+    },
+    "click .album-delete": function () {
+        Session.set("albums.delete", !Session.get("albums.delete"));
+    }
+});
+
+Template.adminAlbumActions.events({
+    "click .photo-delete": function () {
+        Session.set("photos.delete", !Session.get("photos.delete"));
     }
 });
 

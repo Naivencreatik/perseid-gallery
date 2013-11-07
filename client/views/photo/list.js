@@ -23,11 +23,10 @@ Template.photoList.destroyed = function(){
 };
 
 Template.photoThumb.events({
-    "click button": function (event, template) {
-        event.stopImmediatePropagation();
+    "click .btn-delete": function (event, template) {
         Meteor.call("photo.delete", this._id);
     },
-    "click": function(event, template){
+    "click .photo-thumb-img": function(event, template){
         var photo = this;
 
         var $el = $(template.firstNode);
@@ -61,3 +60,9 @@ function initializePackery(el){
 
     return pckry;
 }
+
+Template.photoThumb.helpers({
+    "deleteMode": function(){
+        return Session.get("photos.delete");
+    }
+});
