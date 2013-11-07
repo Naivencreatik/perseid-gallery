@@ -6,5 +6,5 @@ i18n.map("fr", {
     "admin.photos.delete": "Supprimer images",
     "uploads.progress": "Envoi en cours",
     "uploads.errors": "Erreurs",
-    "album.dropfile": "Deposez vos images"
+    "album.dropfile": "Deposez vos images ici!"
 });

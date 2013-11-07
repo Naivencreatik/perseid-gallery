@@ -1,7 +1,7 @@
 <template name="album">
     {{> photoList}}
     {{> albumPhotoOverlay}}
-    {{> albumDragOverlay}}
+    {{> albumDropOverlay}}
 </template>
 
 <template name="albumPhotoOverlay">
@@ -10,8 +10,10 @@
     {{/if}} 
 </template>
 
-<template name="albumDragOverlay">
+<template name="albumDropOverlay">
     {{#if dragging}}
-        <div class="album-drag-overlay">{{i18n "album.dropfile"}}</div>
+        <div class="album-drop-overlay-wrap">
+            <div class="album-drop-overlay"><p>{{i18n "album.dropfile"}}</p></div>
+        </div>
     {{/if}}    
 </template>

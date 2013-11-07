@@ -18,13 +18,13 @@ Template.albumPhotoOverlay.helpers({
     }
 });
 
-Template.albumDragOverlay.helpers({
+Template.albumDropOverlay.helpers({
     dragging: function(){
         return Session.equals("album.dragging", true);
     }
 });
 
-Template.albumDragOverlay.events({
+Template.albumDropOverlay.events({
     "dragleave": function (event, template) {
         Session.set("album.dragging", false);
     },
