@@ -5,13 +5,12 @@ Router.map(function() {
     this.route("albumList", {
         path: "/albums",
         waitOn: Perseid.subs.albums,
-        after: function() {
-            this.render("adminAlbumListActions", {to: "adminActions"});
-        }
+        adminActionsTemplate: "adminAlbumListActions"
     });
 
     this.route("album", {
         path:"/albums/:_id",
+        adminActionsTemplate: "adminAlbumActions",
         waitOn: function() {
             return [Perseid.subs.albums, Perseid.subs.photos];
         },
@@ -20,9 +19,6 @@ Router.map(function() {
                 Perseid.subs.photos.stop();
             }
             Perseid.subs.photos = Meteor.subscribe("photos", this.params._id);
-        },
-        after: function() {
-            this.render("adminAlbumActions", {to: "adminActions"});
         },
         data: function() {
             return Perseid.colls.albums.findOne({_id: this.params._id});
