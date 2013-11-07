@@ -15,7 +15,9 @@
             <h3>{{name}}</h3>
             {{> albumThumbImg thumbImg}}
         </a>
-        <button>Supprimer</button>
+        {{#if currentUser}}
+            <button>Supprimer</button>    
+        {{/if}}    
     </div>
 </template>
 

@@ -8,7 +8,9 @@
 
 <template name="photoThumb">
     <div class="photo-thumb" data-id="{{_id}}">
-       {{photoImg "thumb"}}
-        <button>Supprimer</button>    
+        {{photoImg "thumb"}}
+        {{#if currentUser}}
+            <button>Supprimer</button>    
+        {{/if}}
     </div>
 </template>
