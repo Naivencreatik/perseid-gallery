@@ -1,6 +1,6 @@
 Template.albumList.helpers({
     "albums": function(){
-        return Perseid.colls.albums.find();
+        return Gallery.colls.albums.find();
     }
 });
 
@@ -14,7 +14,7 @@ Template.albumThumb.events({
 
 Template.albumThumb.helpers({
     "thumbImg": function(){
-        return Perseid.colls.photos.findOne({albumId: this._id});
+        return Gallery.colls.photos.findOne({albumId: this._id});
     },
     "deleteMode": function(){
         return Session.get("albums.delete");

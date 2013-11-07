@@ -1,7 +1,7 @@
-var Albums = Perseid.colls.albums;
+var Albums = Gallery.colls.albums;
 
 var AlbumsUploads = new Meteor.Collection(null);
-Perseid.colls.uploads = AlbumsUploads;
+Gallery.colls.uploads = AlbumsUploads;
 
 Albums.upload = function (id, files){
     files = _.toArray(files);

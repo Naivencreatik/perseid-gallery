@@ -147,11 +147,11 @@ Template.photoOverlay.events({
     },
     "click .photo-overlay-prev": function(event){
         event.stopPropagation();
-        Session.set("photo.selected", Perseid.colls.photos.findOne({_id: Session.get("album.order.prev")}));
+        Session.set("photo.selected", Gallery.colls.photos.findOne({_id: Session.get("album.order.prev")}));
     },
     "click .photo-overlay-next": function(event){
         event.stopPropagation();
-        Session.set("photo.selected", Perseid.colls.photos.findOne({_id: Session.get("album.order.next")}));
+        Session.set("photo.selected", Gallery.colls.photos.findOne({_id: Session.get("album.order.next")}));
     }
 });
 

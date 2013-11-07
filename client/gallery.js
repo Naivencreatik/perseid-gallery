@@ -1,10 +1,10 @@
-Perseid.subs.albums = Meteor.subscribe("albums");
-Perseid.subs.albumsThumbs = Meteor.subscribe("albumsThumbs");
+Gallery.subs.albums = Meteor.subscribe("albums");
+Gallery.subs.albumsThumbs = Meteor.subscribe("albumsThumbs");
 
 Router.map(function() {
     this.route("albumList", {
         path: "/albums",
-        waitOn: Perseid.subs.albums,
+        waitOn: Gallery.subs.albums,
         adminActionsTemplate: "adminAlbumListActions",
         adminStatusTemplate: "adminUploadProgress"
     });
@@ -14,16 +14,16 @@ Router.map(function() {
         adminActionsTemplate: "adminAlbumActions",
         adminStatusTemplate: "adminUploadProgress",
         waitOn: function() {
-            return [Perseid.subs.albums, Perseid.subs.photos];
+            return [Gallery.subs.albums, Gallery.subs.photos];
         },
         before: function () {
-            if (Perseid.subs.photos){
-                Perseid.subs.photos.stop();
+            if (Gallery.subs.photos){
+                Gallery.subs.photos.stop();
             }
-            Perseid.subs.photos = Meteor.subscribe("photos", this.params._id);
+            Gallery.subs.photos = Meteor.subscribe("photos", this.params._id);
         },
         data: function() {
-            return Perseid.colls.albums.findOne({_id: this.params._id});
+            return Gallery.colls.albums.findOne({_id: this.params._id});
         }
     });
 });

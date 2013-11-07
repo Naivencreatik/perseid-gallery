@@ -4,11 +4,13 @@ var writeFileSync = Meteor._wrapAsync(fs.writeFile);
 var readFileSync = Meteor._wrapAsync(fs.readFile);
 var tmpDir = process.env.TMP || process.env.TMPDIR || process.env.TEMP || "/tmp" || process.cwd();
 
-SmartFile.allow = function (options){
+var sf = Gallery.smartfile;
+
+sf.allow = function (options){
     var baseName = stripExtension(options.fileName);
 
-    Perseid.colls.photos.conflictCheck({name: baseName, albumId: options.albumId});
-    Perseid.colls.albums.existenceCheck(options.albumId);
+    Gallery.colls.photos.conflictCheck({name: baseName, albumId: options.albumId});
+    Gallery.colls.albums.existenceCheck(options.albumId);
 
     //Force photo to be stored within album directory
     options.path = options.albumId;
@@ -17,26 +19,26 @@ SmartFile.allow = function (options){
     return true;
 };
 
-SmartFile.onUpload = function (result, options){
-    Perseid.colls.photos.insert({
+sf.onUpload = function (result, options){
+    Gallery.colls.photos.insert({
         albumId: options.albumId,
         name: options.name,
         date: new Date()
     });
 };
 
-SmartFile.onUploadFail = function (err, options){
+sf.onUploadFail = function (err, options){
     console.log("SmartFile upload failed: ", err.statusCode, err.detail);
 };
 
-SmartFile.onIncomingFile = function (data, options){
+sf.onIncomingFile = function (data, options){
     var tmpFile = writeBufferToTempFile(data, options.fileName);
     data = null; //discard the original buffer for GCing
 
     var uploadQueue = [tmpFile];
 
-    Perseid.colls.photos.sizes.forEach(function(size){
-        var actualfileName = Perseid.colls.photos.fileNameForSize(options, size);
+    Gallery.colls.photos.sizes.forEach(function(size){
+        var actualfileName = Gallery.colls.photos.fileNameForSize(options, size);
         var resizedFile = path.resolve(tmpDir, actualfileName);
 
         Imagemagick.resize({

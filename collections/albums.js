@@ -1,8 +1,8 @@
 var Albums = new Meteor.Collection("albums");
-Perseid.colls.albums = Albums;
+Gallery.colls.albums = Albums;
 
 Albums.existenceCheck = function(albumId){
-    var album = Perseid.colls.albums.findOne({_id: albumId});
+    var album = Gallery.colls.albums.findOne({_id: albumId});
     if (!album) {
         throw new Meteor.Error(404, "Unknown album");
     }
@@ -11,7 +11,7 @@ Albums.existenceCheck = function(albumId){
 };
 
 Albums.conflictCheck = function(album){
-    var conflictingAlbum = Perseid.colls.albums.findOne({name: name});
+    var conflictingAlbum = Gallery.colls.albums.findOne({name: name});
     if (conflictingAlbum) {
         throw new Meteor.Error(409, "Album " + name + " already exists");
     }

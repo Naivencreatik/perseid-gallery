@@ -21,7 +21,7 @@ Template.adminAddImage.events({
 
     "change input": function(event, template){
         var input = event.target;        
-        Perseid.colls.albums.upload(this._id, input.files);
+        Gallery.colls.albums.upload(this._id, input.files);
         input.form.reset();
     }
 });
@@ -35,10 +35,10 @@ Template.adminAddYoutube.events({
 
 Template.adminUploadProgress.helpers({
     "stats": function() {
-        var total = Perseid.colls.uploads.find().count();
-        var error = Perseid.colls.uploads.find({state: "error"}).count();
-        var success = Perseid.colls.uploads.find({state: "success"}).count();
-        var hasPending = Perseid.colls.uploads.find({state: "pending"}).count() !== 0;
+        var total = Gallery.colls.uploads.find().count();
+        var error = Gallery.colls.uploads.find({state: "error"}).count();
+        var success = Gallery.colls.uploads.find({state: "success"}).count();
+        var hasPending = Gallery.colls.uploads.find({state: "pending"}).count() !== 0;
 
         return {
             hasPending: hasPending,
@@ -51,6 +51,6 @@ Template.adminUploadProgress.helpers({
 
 Template.adminUploadProgress.events({
     "click .upload-errors": function () {
-        Perseid.colls.uploads.remove({state: "error"});
+        Gallery.colls.uploads.remove({state: "error"});
     }
 });

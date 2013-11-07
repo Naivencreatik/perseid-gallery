@@ -12,6 +12,7 @@ Package.on_use(function (api) {
   ], ['server']);
 
   api.add_files([
+    'lib/gallery.js',
     'collections/albums.js',
     'collections/photos.js'
   ], ['client', 'server']);

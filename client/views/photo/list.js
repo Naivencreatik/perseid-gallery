@@ -1,6 +1,6 @@
 Template.photoList.helpers({
     "photos": function(){
-        return Perseid.colls.photos.find({albumId: this._id}, {sort:{name: 1}});
+        return Gallery.colls.photos.find({albumId: this._id}, {sort:{name: 1}});
     }
 });
 

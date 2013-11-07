@@ -1,5 +1,5 @@
-var Photos = Perseid.colls.photos;
-var Albums = Perseid.colls.albums;
+var Photos = Gallery.colls.photos;
+var Albums = Gallery.colls.albums;
 
 var ytRegex = new RegExp("(?:https?://)?www\\.youtube\\.com/watch(?:\\?|&)v=([^\\s&]+)");
 
@@ -66,7 +66,7 @@ Meteor.methods({
     "photo.delete": function(id){
         Perseid.checkUserId(this.userId);
 
-        var photo = Perseid.colls.photos.existenceCheck(id);
+        var photo = Gallery.colls.photos.existenceCheck(id);
 
         if (photo.type !== "youtube"){
             var paths = Photos.sizes.map(function(size){

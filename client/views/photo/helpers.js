@@ -31,7 +31,7 @@ function imgFromSmartFile(photo, size){
         break;
     }
 
-    var photoPath = Perseid.colls.photos.pathFor(photo, photoSize);
+    var photoPath = Gallery.colls.photos.pathFor(photo, photoSize);
 
     return SmartFile.resolvePublic(photoPath);
 }

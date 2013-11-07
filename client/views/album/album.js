@@ -38,6 +38,6 @@ Template.albumDropOverlay.events({
         var albumId = this._id;
         var files = event.dataTransfer.files;
 
-        Perseid.colls.albums.upload(albumId, files);
+        Gallery.colls.albums.upload(albumId, files);
     }
 });
