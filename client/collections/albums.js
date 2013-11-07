@@ -4,28 +4,36 @@ var AlbumsUploads = new Meteor.Collection(null);
 Perseid.colls.uploads = AlbumsUploads;
 
 Albums.upload = function (id, files){
+    files = _.toArray(files);
+    
     _.each(files, function (file) {
         var fileId = AlbumsUploads.insert({name: file.name});    
         file.uploadId = fileId;
-
-        changeUploadState(file, "pending");        
+        
+        var state = "pending";
+        if (file.type.indexOf("image") !== 0) {
+            state = "fail";
+        }
+        
+        changeUploadState(file, state);        
     });
 
-    _.each(files, function(file){
-        if (file.type.indexOf("image") !== 0) {
-            changeUploadState(file, "fail");
-            return;
-        }
+    function uploadFile () {
+        var file = files.shift();
+        if (!file) return;
 
         SmartFile.upload(file, {albumId: id}, function(err, uploadPath){
+            var state = "success";
             if (err) {
-                changeUploadState(file, "fail");
+                state = "fail";
             }
-            else {
-                changeUploadState(file, "success");
-            }
+            changeUploadState(file, state);
+
+            uploadFile();
         });
-    });
+    }
+
+    uploadFile();
 };
 
 function changeUploadState(file, state){
