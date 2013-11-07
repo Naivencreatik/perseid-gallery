@@ -11,7 +11,7 @@ Albums.existenceCheck = function(albumId){
 };
 
 Albums.conflictCheck = function(album){
-    var conflictingAlbum = Gallery.colls.albums.findOne({name: name});
+    var conflictingAlbum = Gallery.colls.albums.findOne({name: album.name});
     if (conflictingAlbum) {
         throw new Meteor.Error(409, "Album " + name + " already exists");
     }
