@@ -1,35 +1,31 @@
 <template name="adminAlbumListActions">
-    <li class="nav-item">
-        <a href="#">{{i18n "admin.albums.add"}}</a>
-    </li>
-    {{> adminUploadProgress}}
+    <button class="btn navbar-btn btn-success">
+        <span class="glyphicon glyphicon-plus-sign"></span> {{i18n "admin.albums.add"}}
+    </button>
 </template>
 
 <template name="adminAlbumActions">
     {{> adminAddImage}}
     {{> adminAddYoutube}}
-    {{> adminUploadProgress}}
 </template>
 
 <template name="adminAddImage">
-    <li class="nav-item">
-        <a href="#">{{i18n "admin.photos.add.file"}}</a>
-        <form class="photo-file-form"  action="#">
-            <input type="file" multiple accept="image/*">
-        </form> 
-    </li>
+    <button class="btn navbar-btn btn-success">
+        <span class="glyphicon glyphicon-cloud-upload"></span> {{i18n "admin.photos.add.file"}}
+    </button>
+    <form class="photo-file-form"  action="#">
+        <input type="file" multiple accept="image/*">
+    </form> 
 </template>
 
 <template name="adminAddYoutube">
-    <li class="nav-item">
-        <a href="#">{{i18n "admin.photos.add.youtube"}}</a>
-    </li>
+    <button class="btn navbar-btn btn-success">
+        <span class="glyphicon glyphicon-facetime-video"></span> {{i18n "admin.photos.add.youtube"}}
+    </button>
 </template>
 
 <template name="adminUploadProgress">
     {{#if total}}
-        <li class="nav-item right">
-            {{i18n "uploads.progress"}}: {{success}}/{{total}}
-        </li>
+        {{i18n "uploads.progress"}}: {{success}}/{{total}}
     {{/if}}
 </template>
