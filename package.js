@@ -30,7 +30,7 @@ Package.on_use(function (api) {
     
     'client/i18n/fr.js',
 
-    'client/styles/main.css',
+    'client/styles/gallery.css',
 
     'client/vendor/packery.pkgd.js',
     'client/vendor/imagesloaded.pkgd.js',

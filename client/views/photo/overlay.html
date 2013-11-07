@@ -14,9 +14,9 @@
 
 <template name="photoOverlayNav">
     {{#if navigation.prev}}
-        <div class="photo-overlay-prev">&lt;</div>
+        <div class="photo-overlay-nav photo-overlay-prev"><span class="glyphicon glyphicon-chevron-left"></span></div>
     {{/if}}
     {{#if navigation.next}}
-        <div class="photo-overlay-next">&gt;</div>
+        <div class="photo-overlay-nav photo-overlay-next"><span class="glyphicon glyphicon-chevron-right"></span></div>
     {{/if}}
 </template>
