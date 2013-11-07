@@ -34,10 +34,21 @@ Template.adminAddYoutube.events({
 });
 
 Template.adminUploadProgress.helpers({
-    "success": function() {
-        return Perseid.colls.uploads.find({state: "success"}).count();
-    },
-    "total": function() {
-        return Perseid.colls.uploads.find({}).count();
+    "stats": function() {
+        var total = Perseid.colls.uploads.find().count();
+        var error = Perseid.colls.uploads.find({state: "error"}).count();
+        var pending = Perseid.colls.uploads.find({state: "pending"}).count();
+
+        return {
+            pending: pending,
+            total: total - error,
+            error: error
+        };
+    }
+});
+
+Template.adminUploadProgress.events({
+    "click .upload-errors": function () {
+        Perseid.colls.uploads.remove({state: "error"});
     }
 });

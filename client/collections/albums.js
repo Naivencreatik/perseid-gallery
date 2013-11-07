@@ -12,7 +12,7 @@ Albums.upload = function (id, files){
         
         var state = "pending";
         if (file.type.indexOf("image") !== 0) {
-            state = "fail";
+            state = "error";
         }
         
         changeUploadState(file, state);        
@@ -25,7 +25,7 @@ Albums.upload = function (id, files){
         SmartFile.upload(file, {albumId: id}, function(err, uploadPath){
             var state = "success";
             if (err) {
-                state = "fail";
+                state = "error";
             }
             changeUploadState(file, state);
 

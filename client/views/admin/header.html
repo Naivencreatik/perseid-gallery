@@ -31,7 +31,10 @@
 </template>
 
 <template name="adminUploadProgress">
-    {{#if total}}
-        <p class="navbar-text">{{i18n "uploads.progress"}}: {{success}}/{{total}}</p>
+    {{#if stats.pending}}
+        <p class="navbar-text upload-progress">{{i18n "uploads.progress"}}: {{stats.pending}}/{{stats.total}}</p>
+    {{/if}}
+    {{#if stats.error}}
+        <p class="navbar-text upload-errors">{{i18n "uploads.errors"}}: {{stats.error}}</p>
     {{/if}}
 </template>
