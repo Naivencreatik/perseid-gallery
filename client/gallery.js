@@ -5,12 +5,14 @@ Router.map(function() {
     this.route("albumList", {
         path: "/albums",
         waitOn: Perseid.subs.albums,
-        adminActionsTemplate: "adminAlbumListActions"
+        adminActionsTemplate: "adminAlbumListActions",
+        adminStatusTemplate: "adminUploadProgress"
     });
 
     this.route("album", {
         path:"/albums/:_id",
         adminActionsTemplate: "adminAlbumActions",
+        adminStatusTemplate: "adminUploadProgress",
         waitOn: function() {
             return [Perseid.subs.albums, Perseid.subs.photos];
         },

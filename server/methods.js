@@ -9,7 +9,7 @@ Meteor.methods({
         check(name, Perseid.match.AlphaNumericNonEmptyString);
 
         var album = {name: name};
-        Photos.conflictCheck(album);
+        Albums.conflictCheck(album);
 
         var id = Albums.insert(album);
         try {

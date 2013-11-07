@@ -22,6 +22,7 @@ Template.adminAddImage.events({
     "change input": function(event, template){
         var input = event.target;        
         Perseid.colls.albums.upload(this._id, input.files);
+        input.form.reset();
     }
 });
 
