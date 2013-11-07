@@ -19,6 +19,5 @@ Meteor.publish("albumsThumbs", function(){
 });
 
 Meteor.publish("photos", function(albumId){
-    check(albumId, String);
     return Perseid.colls.photos.find({albumId: albumId});
 });

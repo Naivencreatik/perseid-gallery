@@ -26,6 +26,7 @@ Package.on_use(function (api) {
     'client/gallery.js',
     
     'client/collections/albums.js',
+    'client/collections/photos.js',
     
     'client/i18n/fr.js',
 

@@ -5,7 +5,7 @@ Perseid.colls.uploads = AlbumsUploads;
 
 Albums.upload = function (id, files){
     files = _.toArray(files);
-    
+
     _.each(files, function (file) {
         var fileId = AlbumsUploads.insert({name: file.name});    
         file.uploadId = fileId;
@@ -39,3 +39,9 @@ Albums.upload = function (id, files){
 function changeUploadState(file, state){
     AlbumsUploads.update({_id: file.uploadId}, {$set:{state: state}});
 }
+
+Meteor.methods({
+    "album.delete": function(id){
+        Albums.remove({_id: id});
+    }
+});
