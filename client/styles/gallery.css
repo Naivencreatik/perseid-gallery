@@ -35,7 +35,11 @@
     cursor: pointer;
 }
 
-.photo-thumb img {
+.photo-thumb-img {
+    height: 100%;
+}
+
+.photo-thumb-img img {
     height: 100%;
 }
 
