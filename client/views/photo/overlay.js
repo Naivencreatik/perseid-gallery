@@ -9,7 +9,7 @@ var transitionEndEvent = {
     transition: "transitionend"
 }[ getStyleProperty("transition") ];
 
-Template.photoOverlayImg.rendered = function(){
+Template.photoOverlayImg.rendered = function() {
     var el = this.firstNode;
     var imgEl = this.find("img");
     var photo = this.data;
@@ -18,27 +18,27 @@ Template.photoOverlayImg.rendered = function(){
     applyStyle(el, "transformOrigin", "0 0", true);
     applyStyle(imgEl, "display", "none");
 
-    if (animate){
+    if (animate) {
         delete photo.animate;
 
         moveElement(el, photo.offset.left, photo.offset.top - $window.scrollTop());
 
-        el.addEventListener(transitionEndEvent, function(event){
+        el.addEventListener(transitionEndEvent, function(event) {
             onOverlayDisplayed(el, photo);
             applyStyle(el, "transitionProperty", "", true);
             applyStyle(el, "transitionDuration", "", true);
         }, false);
     }
 
-    imagesLoaded(el, function(){
+    imagesLoaded(el, function() {
         onOverlayLoaded(el, imgEl, animate);
 
-        if (!animate){
+        if (!animate) {
             onOverlayDisplayed(el, photo);
         }
     });
 
-    $(window).on("resize.photo-overlay", _.debounce(function(){
+    $(window).on("resize.photo-overlay", _.debounce(function() {
         onOverlayLoaded(el, imgEl, false);
         onOverlayDisplayed(el, photo);
     }, 250));
@@ -46,11 +46,11 @@ Template.photoOverlayImg.rendered = function(){
     prepareNextAndPrevPhotos(this.data);
 };
 
-Template.photoOverlayImg.destroyed = function(){
+Template.photoOverlayImg.destroyed = function() {
     $(window).off(".photo-overlay");
 };
 
-function onOverlayLoaded(overlayEl, imgEl, animate){
+function onOverlayLoaded(overlayEl, imgEl, animate) {
     var imgRatio = imgEl.width / imgEl.height;
 
     var wWidth = $window.width();
@@ -64,7 +64,7 @@ function onOverlayLoaded(overlayEl, imgEl, animate){
     var x = wWidth/2 - finalWidth/2;
     var y = wHeight * 0.05;
 
-    if (animate){
+    if (animate) {
         applyStyle(overlayEl, "transitionProperty", transformProperty, true);
         applyStyle(overlayEl, "transitionDuration", "0.8s", true);
     }
@@ -80,11 +80,11 @@ function onOverlayLoaded(overlayEl, imgEl, animate){
     };
 }
 
-function onOverlayDisplayed(overlayEl, photo){
-    if (photo.type === "youtube"){
+function onOverlayDisplayed(overlayEl, photo) {
+    if (photo.type === "youtube") {
         var iframe = overlayEl.querySelector("iframe");
-        
-        if (iframe === null){
+
+        if (iframe === null) {
             iframe = document.createElement("iframe");
             iframe.setAttribute("frameborder", "0");
             iframe.style.position = "absolute";
@@ -93,7 +93,7 @@ function onOverlayDisplayed(overlayEl, photo){
             iframe.style.zIndex = 999;
             iframe.src = "http://www.youtube.com/embed/" + photo.youtube.videoId + "?autoplay=1&html5=1";
 
-            iframe.onload = function(){
+            iframe.onload = function() {
                 var preview = overlayEl.querySelector("img");
                 overlayEl.removeChild(preview);
             };
@@ -111,7 +111,7 @@ function onOverlayDisplayed(overlayEl, photo){
     }
 }
 
-function prepareNextAndPrevPhotos(currentPhoto){
+function prepareNextAndPrevPhotos(currentPhoto) {
     var photoOrder = Session.get("album.order");
     var i = _.indexOf(photoOrder, currentPhoto._id);
 
@@ -123,18 +123,18 @@ function prepareNextAndPrevPhotos(currentPhoto){
 }
 
 /* CSS Helpers*/
-function applyStyle(el, prop, value, resolve){
-    if (resolve){
+function applyStyle(el, prop, value, resolve) {
+    if (resolve) {
         prop = getStyleProperty(prop);
     }
 
     el.style[prop] = value;
 }
 
-function moveElement(el, x, y, scale){
+function moveElement(el, x, y, scale) {
     var tranform = "translate(" + x + "px, " + y + "px)";
 
-    if (scale){
+    if (scale) {
         tranform += " scale(" + scale +")";
     }
 
@@ -142,21 +142,21 @@ function moveElement(el, x, y, scale){
 }
 
 Template.photoOverlay.events({
-    "click": function(){
+    "click": function() {
         Session.set("photo.selected", null);
     },
-    "click .photo-overlay-prev": function(event){
+    "click .photo-overlay-prev": function(event) {
         event.stopPropagation();
         Session.set("photo.selected", Gallery.colls.photos.findOne({_id: Session.get("album.order.prev")}));
     },
-    "click .photo-overlay-next": function(event){
+    "click .photo-overlay-next": function(event) {
         event.stopPropagation();
         Session.set("photo.selected", Gallery.colls.photos.findOne({_id: Session.get("album.order.next")}));
     }
 });
 
 Template.photoOverlayNav.helpers({
-    "navigation": function(){
+    "navigation": function() {
         return {
             prev: !!Session.get("album.order.prev"),
             next: !!Session.get("album.order.next")

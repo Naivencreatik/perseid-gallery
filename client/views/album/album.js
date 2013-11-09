@@ -1,7 +1,7 @@
 Template.album.events({
-    "dragover": function (event, template) {
+    "dragover": function(event, template) {
         //Ignore drags when the overlay is shown
-        if (_.isObject(Session.get("photo.selected"))){
+        if (_.isObject(Session.get("photo.selected"))) {
             return;
         }
 
@@ -13,26 +13,26 @@ Template.album.events({
 });
 
 Template.albumPhotoOverlay.helpers({
-    "photoSelected": function(){
+    "photoSelected": function() {
         return Session.get("photo.selected");
     }
 });
 
 Template.albumDropOverlay.helpers({
-    dragging: function(){
+    dragging: function() {
         return Session.equals("album.dragging", true);
     }
 });
 
 Template.albumDropOverlay.events({
-    "dragleave": function (event, template) {
+    "dragleave": function(event, template) {
         Session.set("album.dragging", false);
     },
 
-    "drop": function (event, template) {
+    "drop": function(event, template) {
         event.stopPropagation();
         event.preventDefault();
-        
+
         Session.set("album.dragging", false);
 
         var albumId = this._id;

@@ -1,10 +1,10 @@
-Handlebars.registerHelper("photoImg", function(size){
+Handlebars.registerHelper("photoImg", function(size) {
     var photoPath;
 
-    if (!this.type){
+    if (!this.type) {
         photoPath = imgFromSmartFile(this, size);
     }
-    else if (this.type === "youtube"){
+    else if (this.type === "youtube") {
         photoPath = this.youtube.artwork;
     }
 
@@ -17,9 +17,9 @@ Handlebars.registerHelper("photoImg", function(size){
     return new Handlebars.SafeString(imgEl);
 });
 
-function imgFromSmartFile(photo, size){
+function imgFromSmartFile(photo, size) {
     var photoSize;
-    switch (size){
+    switch (size) {
     case "thumb":
         photoSize = 256;
         break;
@@ -32,6 +32,5 @@ function imgFromSmartFile(photo, size){
     }
 
     var photoPath = Gallery.colls.photos.pathFor(photo, photoSize);
-
     return Gallery.smartfile.resolvePublic(photoPath);
 }

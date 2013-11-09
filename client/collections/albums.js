@@ -3,26 +3,26 @@ var Albums = Gallery.colls.albums;
 var AlbumsUploads = new Meteor.Collection(null);
 Gallery.colls.uploads = AlbumsUploads;
 
-Albums.upload = function (id, files){
+Albums.upload = function(id, files) {
     files = _.toArray(files);
 
-    _.each(files, function (file) {
-        var fileId = AlbumsUploads.insert({name: file.name});    
+    _.each(files, function(file) {
+        var fileId = AlbumsUploads.insert({name: file.name});
         file.uploadId = fileId;
-        
+
         var state = "pending";
         if (file.type.indexOf("image") !== 0) {
             state = "error";
         }
-        
-        changeUploadState(file, state);        
+
+        changeUploadState(file, state);
     });
 
     function uploadFile () {
         var file = files.shift();
         if (!file) return;
 
-        Gallery.smartfile.upload(file, {albumId: id}, function(err, uploadPath){
+        Gallery.smartfile.upload(file, {albumId: id}, function(err, uploadPath) {
             var state = "success";
             if (err) {
                 state = "error";
@@ -36,12 +36,12 @@ Albums.upload = function (id, files){
     uploadFile();
 };
 
-function changeUploadState(file, state){
+function changeUploadState(file, state) {
     AlbumsUploads.update({_id: file.uploadId}, {$set:{state: state}});
 }
 
 Meteor.methods({
-    "album.delete": function(id){
+    "album.delete": function(id) {
         Albums.remove({_id: id});
     }
 });

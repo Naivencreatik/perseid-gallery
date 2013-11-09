@@ -16,7 +16,7 @@ Router.map(function() {
         waitOn: function() {
             return [Gallery.subs.albums, Gallery.subs.photos];
         },
-        before: function () {
+        before: function() {
             if (Gallery.subs.photos){
                 Gallery.subs.photos.stop();
             }

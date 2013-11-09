@@ -1,10 +1,10 @@
 Template.photoList.helpers({
-    "photos": function(){
+    "photos": function() {
         return Gallery.colls.photos.find({albumId: this._id}, {sort:{name: 1}});
     }
 });
 
-Template.photoList.rendered = function(){
+Template.photoList.rendered = function() {
     var that = this;
     var el = this.firstNode;
 
@@ -12,21 +12,21 @@ Template.photoList.rendered = function(){
 
     this.pckry = initializePackery(el);
 
-    imagesLoaded(el, function(){
+    imagesLoaded(el, function() {
         $(el).show();
         that.pckry.layout();
     });
 };
 
-Template.photoList.destroyed = function(){
+Template.photoList.destroyed = function() {
     this.pckry.destroy();
 };
 
 Template.photoThumb.events({
-    "click .btn-delete": function (event, template) {
+    "click .btn-delete": function(event, template) {
         Meteor.call("photo.delete", this._id);
     },
-    "click .photo-thumb-img": function(event, template){
+    "click .photo-thumb-img": function(event, template) {
         var photo = this;
 
         var $el = $(template.firstNode);
@@ -38,19 +38,19 @@ Template.photoThumb.events({
     }
 });
 
-function initializePackery(el){
+function initializePackery(el) {
     var pckry = new Packery(el, {
         itemSelector: ".photo-thumb",
         gutter: 10,
         isInitLayout: false
     });
 
-    pckry.on("layoutComplete", function(){
+    pckry.on("layoutComplete", function() {
         var order = [];
         pckry.sortItemsByPosition();
 
         var elems = pckry.getItemElements();
-        _.each(elems, function(elem, i){
+        _.each(elems, function(elem, i) {
             elem.setAttribute("order", i);
             order.push(elem.getAttribute("data-id"));
         });
@@ -62,7 +62,7 @@ function initializePackery(el){
 }
 
 Template.photoThumb.helpers({
-    "deleteMode": function(){
+    "deleteMode": function() {
         return Session.get("photos.delete");
     }
 });

@@ -1,33 +1,33 @@
 Template.adminAlbumListActions.events({
-    "click .album-add": function (event, template){
+    "click .album-add": function(event, template) {
         var albumName = prompt("Nom du nouvel album?");
         Meteor.call("album.add", albumName);
     },
-    "click .album-delete": function () {
+    "click .album-delete": function() {
         Session.set("albums.delete", !Session.get("albums.delete"));
     }
 });
 
 Template.adminAlbumActions.events({
-    "click .photo-delete": function () {
+    "click .photo-delete": function() {
         Session.set("photos.delete", !Session.get("photos.delete"));
     }
 });
 
 Template.adminAddImage.events({
-    "click button": function (event, template){
+    "click button": function(event, template) {
         template.find("input").click();
     },
 
-    "change input": function(event, template){
-        var input = event.target;        
+    "change input": function(event, template) {
+        var input = event.target;
         Gallery.colls.albums.upload(this._id, input.files);
         input.form.reset();
     }
 });
 
 Template.adminAddYoutube.events({
-    "click button": function (event, template){
+    "click button": function(event, template) {
         var youtubeUrl = prompt("Adresse/URL Youtube?");
         Meteor.call("photo.add.youtube", this._id, youtubeUrl);
     }
@@ -50,7 +50,7 @@ Template.adminUploadProgress.helpers({
 });
 
 Template.adminUploadProgress.events({
-    "click .upload-errors": function () {
+    "click .upload-errors": function() {
         Gallery.colls.uploads.remove({state: "error"});
     }
 });
