@@ -1,17 +1,24 @@
-Template.album.events({
-    "dragover": function(event, template) {
-        //Ignore drags when the overlay is shown or with guests
-        if (_.isObject(Session.get("photo.selected")) ||
-                !Meteor.userId()) {
+Template.album.created = function() {
+    // Guests cannot d&d images...
+    if (!Meteor.userId()) {
+        return;
+    }
+    $(document.body).on("dragover.album", function(event) {
+        //Ignore drags when the overlay is shown
+        if (_.isObject(Session.get("photo.selected"))) {
             return;
         }
 
-        event.stopPropagation();
         event.preventDefault();
-        event.dataTransfer.dropEffect = "copy";
+        event.originalEvent.dataTransfer.dropEffect = "copy";
+
         Session.set("album.dragging", true);
-    }
-});
+    })
+};
+
+Template.album.destroyed = function() {
+    $(document.body).off(".album");
+};
 
 Template.albumPhotoOverlay.helpers({
     "photoSelected": function() {
