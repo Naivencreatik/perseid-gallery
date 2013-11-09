@@ -7,8 +7,9 @@ var tmpDir = process.env.TMP || process.env.TMPDIR || process.env.TEMP || "/tmp"
 var sf = Gallery.smartfile;
 
 sf.allow = function (options){
-    var baseName = stripExtension(options.fileName);
+    Perseid.checkUserId(this.userId);
 
+    var baseName = stripExtension(options.fileName);
     Gallery.colls.photos.conflictCheck({name: baseName, albumId: options.albumId});
     Gallery.colls.albums.existenceCheck(options.albumId);
 

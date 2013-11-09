@@ -1,7 +1,8 @@
 Template.album.events({
     "dragover": function(event, template) {
-        //Ignore drags when the overlay is shown
-        if (_.isObject(Session.get("photo.selected"))) {
+        //Ignore drags when the overlay is shown or with guests
+        if (_.isObject(Session.get("photo.selected")) ||
+                !Meteor.userId()) {
             return;
         }
 
@@ -30,6 +31,10 @@ Template.albumDropOverlay.events({
     },
 
     "drop": function(event, template) {
+        if (!Meteor.userId()) {
+            return;
+        }
+
         event.stopPropagation();
         event.preventDefault();
 
