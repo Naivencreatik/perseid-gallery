@@ -52,17 +52,23 @@ Template.photoOverlayImg.destroyed = function() {
 
 function onOverlayLoaded(overlayEl, imgEl, animate) {
     var imgRatio = imgEl.width / imgEl.height;
-
     var wWidth = $window.width();
     var wHeight = $window.height();
 
-    var finalHeight = wHeight * 0.9;
-    var finalWidth = finalHeight * imgRatio;
+    var targetHeight = wHeight * 0.9;
+    var targetWidth = targetHeight * imgRatio;
 
-    var scale = finalHeight / 256;
+    // Width overflow
+    if (targetWidth > wWidth) {
+        targetWidth = wWidth * 0.9;
+        targetHeight = targetWidth / imgRatio;
+    }
 
-    var x = wWidth/2 - finalWidth/2;
-    var y = wHeight * 0.05;
+    // 256 = thumbnail heigth
+    var scale = targetHeight / 256;
+
+    var x = wWidth/2 - targetWidth/2;
+    var y = wHeight/2 - targetHeight/2;
 
     if (animate) {
         applyStyle(overlayEl, "transitionProperty", transformProperty, true);
@@ -75,8 +81,8 @@ function onOverlayLoaded(overlayEl, imgEl, animate) {
     overlayEl._transform = {
         x: x,
         y: y,
-        width: finalWidth,
-        height: finalHeight
+        width: targetWidth,
+        height: targetHeight
     };
 }
 
@@ -102,10 +108,11 @@ function onOverlayDisplayed(overlayEl, photo) {
         iframe.setAttribute("width", overlayEl._transform.width);
         iframe.setAttribute("height", overlayEl._transform.height);
 
-        // Use relative height method as scale() transform would affect youtube player
+        // Ditch the scale() transform, it would mess up the YouTube player
         applyStyle(overlayEl, "transition", "", true);
+        applyStyle(overlayEl, "width", overlayEl._transform.width + "px");
+        applyStyle(overlayEl, "height", overlayEl._transform.height + "px");
         moveElement(overlayEl, overlayEl._transform.x, overlayEl._transform.y);
-        applyStyle(overlayEl, "height", "90%");
 
         overlayEl.appendChild(iframe);
     }
